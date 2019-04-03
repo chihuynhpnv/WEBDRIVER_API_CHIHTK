@@ -1,12 +1,13 @@
 package selenium;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-//import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-//import org.testng.Assert;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -56,154 +57,89 @@ public class Topic_03_WebElement_WebBrowser {
 	
 	@Test
 	public void TC_02_CheckElementEnabledOrDisabled() {
-		
-		if (isElementEnabled(emailTextbox)) {
-			System.out.println("Result: 'Email' textbox is enabled");
-		}
-		else {
-			System.out.println("Result: 'Email' textbox is disabled");
-		}
-		
-		if (isElementEnabled(ageUnder18Radio)) {
-			System.out.println("Result: 'Under 18' radio button is enabled");
-		}
-		else 
-		{
-			System.out.println("Result: 'Under 18' radio button is disabled");
-		}
-		
-		if (isElementEnabled(educationTextArea)) {
-			System.out.println("Result: 'Education' textarea is enabled");
-		}
-		else {
-			System.out.println("Result: 'Education' textarea is disabled");
-		}
-		
-		if (isElementEnabled(jobRole01)) {
-			System.out.println("Result: 'Job role 01' textbox is enabled");
-		}
-		else {
-			System.out.println("Result: 'Job role 01' textbox is disabled");
-		}
-		
-		if (isElementEnabled(interestsDevelopment)) {
-			System.out.println("Result: 'Development' checkbox is enabled");
-		}
-		else {
-			System.out.println("Result: 'Development' checkbox is disabled");
-		}
-		
-		if (isElementEnabled(slider01)) {
-			System.out.println("Result: 'Slider 01' is enabled");
-		}
-		else {
-			System.out.println("Result: 'Slider 01' is disabled");
-		}
-		
-		if (isElementEnabled(buttonIsEnabled)) {
-			System.out.println("Result: 'Button is enabled' is enabled");
-		}
-		else {
-			System.out.println("Result: 'Button is enabled' is disabled");
-		}
-		
-		// Elemented is disabled
-		
-		if (isElementEnabled(password)) {
-			System.out.println("Result: 'Password' textbox is enabled");
-		}
-		else {
-			System.out.println("Result: 'Password' textbox is disabled");
-		}
-		
-		if (isElementEnabled(ageRadioButtonIsDisabled)) {
-			System.out.println("Result: 'Radio button is disabled' radio button is enabled");
-		}
-		else 
-		{
-			System.out.println("Result: 'Radio button is disabled' radio button is disabled");
-		}
-			
-		if (isElementEnabled(biography)) {
-			System.out.println("Result: 'Biography' textarea is enabled");
-		}
-		else {
-			System.out.println("Result: 'Biography' textarea is disabled");
-		}
-		
-		if (isElementEnabled(jobRole02)) {
-			System.out.println("Result: 'Job role 02' textbox is enabled");
-		}
-		else {
-			System.out.println("Result: 'Job role 02' textbox is disabled");
-		}
-		
-		if (isElementEnabled(interestsCheckboxIsDisabled)) {
-			System.out.println("Result: 'Check box is disabled' checkbox is enabled");
-		}
-		else {
-			System.out.println("Result: 'Check box is disabled' checkbox is disabled");
-		}
-		
-		if (isElementEnabled(slider02)) {
-			System.out.println("Result: 'Slider 02' is enabled");
-		}
-		else {
-			System.out.println("Result: 'Slider 02' is disabled");
-		}
-		
-		if (isElementEnabled(buttonIsDisabled)) {
-			System.out.println("Result: 'Button is disabled' is enabled");
-		}
-		else {
-			System.out.println("Result: 'Button is disabled' is disabled");
-		}
-				
+		driver.get("https://daominhdam.github.io/basic-form/index.html");
+		Assert.assertTrue(isElementEnabled(emailTextbox));
+		Assert.assertTrue(isElementEnabled(ageUnder18Radio));
+		Assert.assertTrue(isElementEnabled(educationTextArea));
+		Assert.assertTrue(isElementEnabled(jobRole01));
+		Assert.assertTrue(isElementEnabled(interestsDevelopment));
+		Assert.assertTrue(isElementEnabled(slider01));
+		Assert.assertTrue(isElementEnabled(buttonIsEnabled));
+		Assert.assertFalse(isElementEnabled(password));
+		Assert.assertFalse(isElementEnabled(ageRadioButtonIsDisabled));
+		Assert.assertFalse(isElementEnabled(biography));
+		Assert.assertFalse(isElementEnabled(jobRole02));
+		Assert.assertFalse(isElementEnabled(interestsCheckboxIsDisabled));
+		Assert.assertFalse(isElementEnabled(slider02));
+		Assert.assertFalse(isElementEnabled(buttonIsDisabled));
 	}
-
 	
 	@Test
 	public void TC_03_CheckElementSelected() {
 		driver.get("https://daominhdam.github.io/basic-form/index.html");
-		
-		driver.findElement(ageUnder18Radio).click();
-		driver.findElement(interestsDevelopment).click();
-		
-		if (isElementSelected(ageUnder18Radio)) {
-			System.out.println("Under 18 radio button is selected");
-		}	
-		else {
-			driver.findElement(ageUnder18Radio).click();
-		}
-		
-		if (isElementSelected(interestsDevelopment)) {
-			System.out.println("Development checkbox is selected");
-			
-		}	
-		else {
-			driver.findElement(interestsDevelopment).click();
-		}
-		
+		checkToCheckbox(ageUnder18Radio);
+		checkToCheckbox(interestsDevelopment);
+		Assert.assertTrue(isElementSelected(ageUnder18Radio));
+		Assert.assertTrue(isElementSelected(interestsDevelopment));
+		unCheckTocheckbox(interestsDevelopment);
+		Assert.assertFalse(isElementSelected(interestsDevelopment));	
 	}	
 	
-	//Khai báo
-		private boolean isElementDisplayed(By byValue) {
-		return driver.findElement(byValue).isDisplayed();
-	}
-	
-	private boolean isElementEnabled (By byValue) {
-		return driver.findElement(byValue).isEnabled();
-		
-	}
-	
-	private boolean isElementSelected (By byValue) {
-		return driver.findElement(byValue).isEnabled();
-		
-	}
-
 	@AfterTest
 	public void afterTest() {
 		driver.quit();
 	}
-
+	
+	public int randomNumber() {
+		Random random = new Random();
+		int number = random.nextInt(1000);
+		System.out.println("Random number = " + number);
+		return number; 
+	}
+	//Khai báo
+	public boolean isElementDisplayed(By byValue) {
+		if (driver.findElement(byValue).isDisplayed()) {
+			System.out.println("Element [" + byValue + "] is displayed!");
+			return true;
+		} else {
+			System.out.println("Element [" + byValue + "] is not displayed!");
+			return false;
+			
+		}
+	}
+	
+	public boolean isElementEnabled(By byValue) {
+		if (driver.findElement(byValue).isEnabled()) {
+			System.out.println("Element [" + byValue + "] is enabled!");
+			return true;
+		} else {
+			System.out.println("Element [" + byValue + "] is not enabled");
+			return false;
+		}	
+	}
+	
+	public boolean isElementSelected(By byValue) {
+		if (driver.findElement(byValue).isSelected()) {
+			System.out.println("Element [" + byValue + "] is selected ");
+			return true;
+		} else {
+			System.out.println("Element [" + byValue + "] is de-selected");
+			return false;
+		}
+	}
+	
+	public void checkToCheckbox(By byValue) {
+		WebElement element = driver.findElement(byValue);
+		if (!element.isSelected()) {
+			element.click();
+		}
+	}
+	
+	public void unCheckTocheckbox(By byValue) {
+		WebElement element = driver.findElement(byValue);
+		if (element.isSelected()) {
+			element.click();
+		}
+	}
+			
 }

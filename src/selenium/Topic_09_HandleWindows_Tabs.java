@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
-public class Topic_09_HandleWindow_Tabs {
+public class Topic_09_HandleWindows_Tabs {
     WebDriver driver;
     JavascriptExecutor jsExecutor;
     
